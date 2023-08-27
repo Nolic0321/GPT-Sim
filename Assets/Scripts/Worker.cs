@@ -23,13 +23,21 @@ public class Worker : MonoBehaviour
 
     private void Update()
     {
-        if (currentTask == null)
+        if (currentTask == null || currentTask is IdleTask)
         {
             Debug.Log($"{name} is getting a new task");
-            currentTask = taskManager.GetNextTask();
-            if (currentTask != null)
+            ITask nextTask = taskManager.GetNextTask();
+        
+            if (nextTask != null)
             {
+                currentTask = nextTask;
                 Debug.Log($"New task assigned to {name}");
+                currentTask.AssignWorker(this);
+            }
+            else if (currentTask == null)
+            {
+                // No tasks available, assign IdleTask
+                currentTask = new IdleTask();
                 currentTask.AssignWorker(this);
             }
         }
@@ -37,6 +45,7 @@ public class Worker : MonoBehaviour
         {
             Debug.Log($"{name} doing task {currentTask}");
             currentTask.Update();
+        
             if (currentTask.IsComplete)
             {
                 currentTask = null;
