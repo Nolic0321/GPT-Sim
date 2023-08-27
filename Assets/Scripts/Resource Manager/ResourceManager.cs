@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using GPTSim.Storage;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GPTSim.Resources
 {
     public class ResourceManager : MonoBehaviour
     {
         public static ResourceManager Instance { get; private set; }
+        public UnityEvent OnResourceChanged = new();
 
         private Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
 
@@ -37,6 +39,8 @@ namespace GPTSim.Resources
                 resources[type] += amount;
             else
                 resources[type] = amount;
+            
+            Instance.OnResourceChanged.Invoke();
         }
 
         private void RemoveResource(ResourceType type, int amount)
@@ -47,7 +51,9 @@ namespace GPTSim.Resources
                     resources[type] -= resources[type];
                 else
                     resources[type] -= amount;
-                
+
+                Instance.OnResourceChanged.Invoke();
+
             }
 
         }

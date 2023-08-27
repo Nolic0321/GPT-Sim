@@ -30,6 +30,14 @@ namespace GPTSim.Storage
             OnResourceAdded?.Invoke(type, amount);
         }
 
+        public void AddResources(Dictionary<ResourceType, int> resources)
+        {
+            foreach (var resource in resources)
+            {
+                AddResource(resource.Key,resource.Value);
+            }
+        }
+
         public void RemoveResource(ResourceType type, int amount)
         {
             if (localResources.ContainsKey(type))

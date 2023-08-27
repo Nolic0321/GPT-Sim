@@ -43,7 +43,7 @@ namespace GPTSim.Tasks
             if (Vector2.Distance(worker.transform.position, Target) < worker.reachTolerance)
             {
                 IsComplete = true;
-                nearestStorageLocation.AddResource(worker.RemoveInventory(),1);
+                nearestStorageLocation.AddResources(worker.RemoveInventory());
             }
             else
             {

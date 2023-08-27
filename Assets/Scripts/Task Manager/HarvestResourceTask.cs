@@ -27,7 +27,7 @@ namespace GPTSim.Tasks
             
             if (Vector2.Distance(worker.transform.position, Target) < worker.reachTolerance)
             {
-                worker.AddToInventory(ResourceType);
+                worker.AddToInventory(this.ResourceType,1);
                 var returnTask = new ReturnToStorageLocationTask(worker);
                 worker.SetCurrentTask(returnTask);
                 IsComplete = true;
